@@ -1,0 +1,36 @@
+.container {
+  margin: 2rem 0 3.5rem 0;
+}
+
+.card {
+  margin-left: 10px !important;
+  padding: 0.5rem;
+}
+
+h5 {
+  font-weight: 600 !important;
+}
+
+.infected {
+  border-bottom: 10px solid rgba(0, 0, 255, 0.5);
+  margin-bottom: 1rem !important;
+}
+
+.recovered {
+  border-bottom: 10px solid rgba(0, 255, 98, 0.5);
+  margin-bottom: 1rem !important;
+}
+
+.deaths {
+  border-bottom: 10px solid rgba(255, 0, 0, 0.5);
+  margin-bottom: 1rem !important;
+}
+
+@media (max-width: 700px) {
+  .card p {
+    font-size: 15px !important;
+  }
+  .card h5 {
+    font-size: 20px !important;
+  }
+}

@@ -1,25 +1,92 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import Cards from './components/Cards/Cards';
+import Chart from './components/Chart/Chart';
+import Header from './components/Header/Header';
+import CountryPicker from './components/CountryPicker/CountryPicker';
+import styles from "./App.module.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const url = "https://covid19.mathdro.id/api";
+
+function App(props) {
+
+    const [ covidData, setCovidData ] = useState({});
+    const [ dailyCovidData, setDailyCovidData ] = useState([]);
+    const [ countries, setCountries ] = useState([]);
+    const [ modifiedDailyData, setModifiedDailyData ] = useState({});
+    const [ modifiedCountry, setModifiedCountry ] = useState({});
+
+    useEffect(() => {
+
+            fetch(url)
+            .then((res) => res.json())
+            .then((data) => {
+                setCovidData(data)
+            }) 
+          
+            const fetchApi = async () =>  {
+                await fetch(`${url}/daily`)
+                .then((res) => res.json())
+                .then((data) => {              
+                    const modifiedData = data.map((dailyData) => ({
+                    confirmed: dailyData.confirmed.total,
+                    deaths: dailyData.deaths.total,
+                    date: dailyData.reportDate,
+                  }))
+                  setDailyCovidData(modifiedData);
+              })   
+            }
+            fetchApi();
+    }, []);
+        
+
+    useEffect(() => {
+        const fetchCountries = async () => {
+            await fetch(`${url}/countries`)
+            .then((res) => res.json())
+            .then((data) => {
+                const countryName = data.countries.map(({ name }) => name);
+                setCountries(countryName);
+            });
+        }
+        fetchCountries();
+          
+       
+    }, [setCountries]);
+
+    const submitCountry = (countryName) => {
+        setModifiedCountry(countryName); 
+         fetch(`${url}/countries/${countryName}`)
+        .then((res) => res.json())
+        .then((data) => {
+            setModifiedDailyData(data);
+            setCovidData(data);
+        });
+        }
+        
+    
+
+    return (
+        <div className={styles.container}>
+            <Header />
+            <Cards covidData={covidData} />
+            <CountryPicker submitCountry={submitCountry} countries={countries} />
+            <Chart modifiedCountry={modifiedCountry} modifiedDailyData={modifiedDailyData} countries={countries} dailyCovidData={dailyCovidData} />
+        </div>
+    );
 }
 
 export default App;
+
+/*  const fetchApi = async () =>  {
+            await fetch(`${url}/daily`)
+            .then((res) => res.json())
+            .then((data) => {
+              const modifiedData = data.map((dailyData) => ({
+                  confirmed: dailyData.confirmed.total,
+                  deaths: dailyData.deaths.total,
+                  date: dailyData.reportDate,
+              }))
+              setDailyCovidData(modifiedData);
+          })   
+        }
+        fetchApi();*/
