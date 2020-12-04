@@ -76,17 +76,3 @@ function App(props) {
 }
 
 export default App;
-
-/*  const fetchApi = async () =>  {
-            await fetch(`${url}/daily`)
-            .then((res) => res.json())
-            .then((data) => {
-              const modifiedData = data.map((dailyData) => ({
-                  confirmed: dailyData.confirmed.total,
-                  deaths: dailyData.deaths.total,
-                  date: dailyData.reportDate,
-              }))
-              setDailyCovidData(modifiedData);
-          })   
-        }
-        fetchApi();*/
