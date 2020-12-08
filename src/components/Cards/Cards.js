@@ -11,6 +11,7 @@ function Cards({  covidData:  { confirmed, recovered, deaths, lastUpdate } }) {
     }
 
     return (
+        
         <div>
            <div className={styles.container}>
                <Grid container spacing={3} justify="center">

@@ -17,14 +17,18 @@ function App(props) {
 
     useEffect(() => {
 
-            fetch(url)
+        const defaultData = async () => {
+        await fetch(url)
             .then((res) => res.json())
             .then((data) => {
-                setCovidData(data)
-            }) 
-          
-            const fetchApi = async () =>  {
-                await fetch(`${url}/daily`)
+                setCovidData(data);
+                }) 
+            }
+        defaultData();
+        
+
+        const fetchApi = async () =>  {
+             await fetch(`${url}/daily`)
                 .then((res) => res.json())
                 .then((data) => {              
                     const modifiedData = data.map((dailyData) => ({
@@ -38,7 +42,6 @@ function App(props) {
             fetchApi();
     }, []);
         
-
     useEffect(() => {
         const fetchCountries = async () => {
             await fetch(`${url}/countries`)
@@ -50,7 +53,6 @@ function App(props) {
         }
         fetchCountries();
           
-       
     }, [setCountries]);
 
     const submitCountry = (countryName) => {
@@ -62,13 +64,12 @@ function App(props) {
             setCovidData(data);
         });
         }
-        
     
-
+        
     return (
         <div className={styles.container}>
             <Header />
-            <Cards covidData={covidData} />
+            <Cards covidData={covidData} /> 
             <CountryPicker submitCountry={submitCountry} countries={countries} />
             <Chart modifiedCountry={modifiedCountry} modifiedDailyData={modifiedDailyData} countries={countries} dailyCovidData={dailyCovidData} />
         </div>
