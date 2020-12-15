@@ -18,24 +18,24 @@ function App(props) {
     useEffect(() => {
 
         const defaultData = async () => {
-        await fetch(url)
+            await fetch(url)
             .then((res) => res.json())
             .then((data) => {
                 setCovidData(data);
-                }) 
+                });
             }
         defaultData();
         
-
         const fetchApi = async () =>  {
-             await fetch(`${url}/daily`)
+                await fetch(`${url}/daily`)
                 .then((res) => res.json())
-                .then((data) => {              
+                .then((data) => {          
                     const modifiedData = data.map((dailyData) => ({
                     confirmed: dailyData.confirmed.total,
                     deaths: dailyData.deaths.total,
                     date: dailyData.reportDate,
-                  }))
+                  }));
+                  
                   setDailyCovidData(modifiedData);
               })   
             }
@@ -57,14 +57,22 @@ function App(props) {
 
     const submitCountry = (countryName) => {
         setModifiedCountry(countryName); 
-         fetch(`${url}/countries/${countryName}`)
+        if (countryName.length > 0) {
+        fetch(`${url}/countries/${countryName}`)
         .then((res) => res.json())
         .then((data) => {
             setModifiedDailyData(data);
             setCovidData(data);
         });
+    } else {
+        fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+            setCovidData(data);
+            setModifiedDailyData(data);
+        })
         }
-    
+    }
         
     return (
         <div className={styles.container}>

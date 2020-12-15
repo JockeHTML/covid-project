@@ -8,8 +8,7 @@ function Cards({  covidData:  { confirmed, recovered, deaths, lastUpdate } }) {
 
     if (!confirmed) {
         return "Loading..";
-    }
-
+    } else {
     return (
         
         <div>
@@ -48,7 +47,8 @@ function Cards({  covidData:  { confirmed, recovered, deaths, lastUpdate } }) {
                </Grid>
            </div> 
         </div>
-    );
+    );}
+
 }
 
 export default Cards;
