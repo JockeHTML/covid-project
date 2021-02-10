@@ -3,6 +3,8 @@ import { FormControl, NativeSelect } from '@material-ui/core';
 
 import styles from "./CountryPicker.module.css";
 
+/* scroll menu with all the countries, and function for picking up the name of the country choosen */
+
 function CountryPicker({countries, submitCountry}) {
     
     const handleCountry = (event) => {

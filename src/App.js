@@ -9,14 +9,15 @@ const url = "https://covid19.mathdro.id/api";
 
 function App(props) {
 
+    /* different states used with the useState hook */
     const [ covidData, setCovidData ] = useState({});
     const [ dailyCovidData, setDailyCovidData ] = useState([]);
     const [ countries, setCountries ] = useState([]);
     const [ modifiedDailyData, setModifiedDailyData ] = useState({});
     const [ modifiedCountry, setModifiedCountry ] = useState({});
 
+    /* useEffect hook used for getting default information */
     useEffect(() => {
-
         const defaultData = async () => {
             await fetch(url)
             .then((res) => res.json())
@@ -26,6 +27,7 @@ function App(props) {
             }
         defaultData();
         
+        /* useEffect hook used for getting daily information */
         const fetchApi = async () =>  {
                 await fetch(`${url}/daily`)
                 .then((res) => res.json())
@@ -42,6 +44,7 @@ function App(props) {
             fetchApi();
     }, []);
         
+    /* useEffect hook used for getting the information when country changes */
     useEffect(() => {
         const fetchCountries = async () => {
             await fetch(`${url}/countries`)
@@ -55,6 +58,7 @@ function App(props) {
           
     }, [setCountries]);
 
+    /* handle country choosen and getting that information */
     const submitCountry = (countryName) => {
         setModifiedCountry(countryName); 
         if (countryName.length > 0) {

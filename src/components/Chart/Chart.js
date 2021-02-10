@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './Chart.module.css';
 import { Line, Bar }  from "react-chartjs-2";
 
+/* using react-chartJS for getting a chart effect, and with different information for country choosen */
+
 function Chart({dailyCovidData, modifiedCountry, modifiedDailyData}) {
 
     const lineChart = (

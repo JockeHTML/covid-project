@@ -4,6 +4,8 @@ import styles from './Cards.module.css';
 import CountUp from 'react-countup';
 import cx from "classnames";
 
+/* Using react-countup for countup effect, displaying three cards with different information */
+
 function Cards({  covidData:  { confirmed, recovered, deaths, lastUpdate } }) {
 
     if (!confirmed) {
