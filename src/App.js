@@ -39,7 +39,8 @@ function App(props) {
                   }));
                   
                   setDailyCovidData(modifiedData);
-              })   
+              })  
+            .catch(err => console.log(err));
             }
             fetchApi();
     }, []);
@@ -52,7 +53,8 @@ function App(props) {
             .then((data) => {
                 const countryName = data.countries.map(({ name }) => name);
                 setCountries(countryName);
-            });
+            })
+        .catch(err => console.log(err));
         }
         fetchCountries();
           
@@ -75,6 +77,7 @@ function App(props) {
             setCovidData(data);
             setModifiedDailyData(data);
         })
+        .catch(err => console.log(err));
         }
     }
         
